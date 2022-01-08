@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext ,useState} from "react";
 
 
 const GithubContext = createContext()
@@ -21,7 +21,7 @@ export const GithubProvider= ({children})=>{
               headers: {
                 Authorization: `token ${GITHUB_TOKEN}`,
               },
-            }
+            }  
           );
 
           const data = await response.json();
@@ -29,15 +29,17 @@ export const GithubProvider= ({children})=>{
           setLoading(false);
         };
 
-return <GithubContext.Provider
-
-value={
-    users,
-    loading
-}
->
+return (
+  <GithubContext.Provider
+    value={{
+      users,
+      loading,
+      fetchUsers,
+    }}
+  >
     {children}
-</GithubContext.Provider>
+  </GithubContext.Provider>
+);
 }
 
 export default GithubContext

@@ -31,7 +31,8 @@ export const GithubProvider= ({children})=>{
           const data = await response.json();
          
           dispatch({
-            type:'GET_USERS'
+            type:'GET_USERS',
+            payload:data
           })
 
         };
@@ -39,8 +40,8 @@ export const GithubProvider= ({children})=>{
 return (
   <GithubContext.Provider
     value={{
-      users,
-      loading,
+      users:state.users,
+      loading:state.loading,
       fetchUsers,
     }}
   >

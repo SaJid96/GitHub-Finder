@@ -17,6 +17,8 @@ export const GithubProvider= ({children})=>{
 
   const [state,dispatch] =useReducer(githubReducer,IntialState)
        
+  //clear results 
+  const clearUsers=() =>dispatch({type :'CLEAR_USERS'})
     
   //Get Search results
         const searchUsers = async (text) => {
@@ -57,6 +59,7 @@ return (
       users: state.users,
       loading: state.loading,
       searchUsers,
+      clearUsers,
     }}
   >
     {children}

@@ -4,13 +4,15 @@ import { Link } from 'react-router-dom';
 import Spinner from '../components/layout/Spinner';
 import { useParams } from 'react-router-dom';
 import GithubContext from '../context/github/GithubContext';
+import RepoList from '../components/repos/RepoList';
 
-function User({ match }) {
-  const { getUser, user, loading } = useContext(GithubContext);
+function User() {
+  const { getUser, user, loading, getUserRepos,repos } = useContext(GithubContext);
 
   const params = useParams();
   useEffect(() => {
     getUser(params.login);
+    getUserRepos(params.login)
   }, []);
 
   const {
@@ -42,7 +44,6 @@ function User({ match }) {
             Back To Search
           </Link>
         </div>
-
         <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 mb-8 md:gap-8">
           <div className="custom-card-image mb-6 md:mb-0">
             <div className="rounded-lg shadow-xl card image-full">
@@ -116,7 +117,6 @@ function User({ match }) {
             </div>
           </div>
         </div>
-
         <div className="w-full py-5 mb-6 rounded-lg shadow-md bg-base-100 stats">
           <div className="stat">
             <div className="stat-figure text-secondary">
@@ -158,8 +158,7 @@ function User({ match }) {
             </div>
           </div>
         </div>
-
-        
+        <RepoList repos={repos} />
       </div>
     </>
   );

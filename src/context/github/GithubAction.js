@@ -20,3 +20,46 @@ const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 
    return items
  };
+
+
+
+  //Get Single User
+
+ export const getUser = async (login) => {
+    setLoading();
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    });
+
+    if (response.status === 404) {
+      window.location = '/notfound';
+    } else {
+      const data = await response.json();
+
+    return data
+    }
+  };
+
+  //Get user repos
+
+ export const getUserRepos = async (login) => {
+    setLoading();
+
+    const params = new URLSearchParams({
+      sort: 'created',
+      per_page:10
+    });
+    
+    const response = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    });
+
+    const data = await response.json();
+
+  return data
+  };

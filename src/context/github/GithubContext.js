@@ -20,25 +20,7 @@ export const GithubProvider = ({ children }) => {
   const clearUsers = () => dispatch({ type: 'CLEAR_USERS' });
 
   //Get Search results
-  const searchUsers = async (text) => {
-    setLoading();
-
-    const params = new URLSearchParams({
-      q: text,
-    });
-    const response = await fetch(`${GITHUB_URL}/search/users?${params}`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-      },
-    });
-
-    const { items } = await response.json();
-
-    dispatch({
-      type: 'GET_USERS',
-      payload: items,
-    });
-  };
+ 
 
   //Get Single User
 
@@ -95,11 +77,9 @@ export const GithubProvider = ({ children }) => {
   return (
     <GithubContext.Provider
       value={{
-        users: state.users,
-        user: state.user,
-        loading: state.loading,
-        repos: state.repos,
-        searchUsers,
+        ...state,
+        dispatch,
+        
         clearUsers,
         getUser,
         getUserRepos
